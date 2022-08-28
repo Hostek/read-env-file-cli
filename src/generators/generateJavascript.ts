@@ -12,7 +12,9 @@ export function generateJavascript({
 }: generateJavascriptParam) {
     const generatedObject = `const generated_env = {
 ${values.reduce((prev, curr) => {
-    return (prev += `\n\t${curr.key}: "${generateEscapedValue(curr.value)}",`)
+    return (prev += `\n\t"${generateEscapedValue(
+        curr.key
+    )}": "${generateEscapedValue(curr.value)}",`)
 }, "")}\n
 }`
 

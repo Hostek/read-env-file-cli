@@ -50,6 +50,18 @@ const each_line = file.split("\n")
 
 const values: valuesType = each_line.map((line) => {
     const [key, value] = line.split("=", 2)
+    if (
+        // check if key starts with a number (digit)
+        key.match(/^\d/) ||
+        key.includes("-") ||
+        key.includes("+") ||
+        key.includes("\\") ||
+        key.includes("\n") ||
+        key.includes(" ") ||
+        key.length > 255
+    ) {
+        console.warn(`Key \`${key}\` may not work with every language!`)
+    }
     return { key, value }
 })
 
