@@ -1,12 +1,10 @@
-import { PROJECT_URL } from "../constants"
-import { generateEscapedValue } from "../utils/generateEscapedValue"
+import { values } from "../types.js"
+import { PROJECT_URL } from "../constants.js"
+import { generateEscapedValue } from "../utils/generateEscapedValue.js"
 
 interface generateCppParams {
     isString: boolean
-    values: {
-        key: string
-        value: string
-    }[]
+    values: values
 }
 
 export function generateCpp({ isString, values }: generateCppParams) {
