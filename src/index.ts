@@ -3,12 +3,13 @@
 import fs from "fs"
 import inquirer from "inquirer"
 import path from "path"
-import { Cpp_data_choices } from "./constants.js"
+import { Cpp_data_choices, JS_module_choices } from "./constants.js"
 import { generateCpp } from "./generators/generateCpp.js"
+import { generateJavascript } from "./generators/generateJavascript.js"
 import { generateTypescript } from "./generators/generateTypescript.js"
 import { supported_langs, valuesType } from "./types.js"
 
-const lang_choices: supported_langs[] = ["c++", "typescript"]
+const lang_choices: supported_langs[] = ["c++", "typescript", "javascript"]
 
 const answers = await inquirer.prompt([
     {
@@ -78,6 +79,8 @@ if (chooseCustomName) {
     filename = `generated-${date.toString()}`
 }
 
+let data = ""
+
 if (type === "c++") {
     if (!filename.includes(".")) {
         filename += ".cpp"
@@ -94,17 +97,30 @@ if (type === "c++") {
 
     const isString = data_type === "std::string"
 
-    const data = generateCpp({ isString, values })
-
-    fs.writeFileSync(path.join(root_path, filename), data)
+    data = generateCpp({ isString, values })
 } else if (type === "typescript") {
     if (!filename.includes(".")) {
         filename += ".ts"
     }
 
-    const data = generateTypescript({ values })
+    data = generateTypescript({ values })
+} else if (type === "javascript") {
+    if (!filename.includes(".")) {
+        filename += ".js"
+    }
 
-    fs.writeFileSync(path.join(root_path, filename), data)
+    const answer = await inquirer.prompt({
+        name: "answerik",
+        type: "list",
+        message: "I should use: ",
+        choices: JS_module_choices,
+    })
+
+    const answerik: typeof JS_module_choices[number] = answer.answerik
+
+    data = generateJavascript({ values, module: answerik })
 }
+
+fs.writeFileSync(path.join(root_path, filename), data)
 
 console.log(`File saved as: ${filename}`)
