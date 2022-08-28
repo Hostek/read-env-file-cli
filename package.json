@@ -10,9 +10,20 @@
         "start": "node dist",
         "watch": "npm run build:watch"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "keywords": [
+        "env",
+        "generate"
+    ],
+    "author": "Hostek",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Hostek/read-env-file-cli"
+    },
+    "bugs": {
+        "url": "https://github.com/Hostek/Organizator/issues"
+    },
+    "homepage": "https://github.com/Hostek/Organizator#readme",
+    "license": "MIT",
     "devDependencies": {
         "@types/inquirer": "^9.0.1",
         "@types/node": "^18.7.13",
@@ -20,5 +31,6 @@
     },
     "dependencies": {
         "inquirer": "^9.1.0"
-    }
+    },
+    "bin": "./dist/index.js"
 }
