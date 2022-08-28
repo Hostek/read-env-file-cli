@@ -1,6 +1,6 @@
 {
     "name": "@hostek123/read-env-file",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
     "main": "dist/index.js",
     "type": "module",
@@ -32,5 +32,7 @@
     "dependencies": {
         "inquirer": "^9.1.0"
     },
-    "bin": "./dist/index.js"
+    "bin": {
+        "read-env-file": "./dist/index.js"
+    }
 }
