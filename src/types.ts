@@ -6,3 +6,7 @@ export type valuesType = {
     key: string
     value: string
 }[]
+
+export interface ObjWithValues {
+    values: valuesType
+}

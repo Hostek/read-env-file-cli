@@ -5,6 +5,7 @@ import inquirer from "inquirer"
 import path from "path"
 import { Cpp_data_choices } from "./constants.js"
 import { generateCpp } from "./generators/generateCpp.js"
+import { generateTypescript } from "./generators/generateTypescript.js"
 import { supported_langs, valuesType } from "./types.js"
 
 const lang_choices: supported_langs[] = ["c++", "typescript"]
@@ -97,6 +98,13 @@ if (type === "c++") {
 
     fs.writeFileSync(path.join(root_path, filename), data)
 } else if (type === "typescript") {
+    if (!filename.includes(".")) {
+        filename += ".ts"
+    }
+
+    const data = generateTypescript({ values })
+
+    fs.writeFileSync(path.join(root_path, filename), data)
 }
 
 console.log(`File saved as: ${filename}`)

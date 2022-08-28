@@ -1,15 +1,14 @@
-import { valuesType } from "../types.js"
-import { PROJECT_URL } from "../constants.js"
+import { GENERATED_USING } from "../constants.js"
+import { ObjWithValues } from "../types.js"
 import { generateEscapedValue } from "../utils/generateEscapedValue.js"
 
-interface generateCppParams {
+interface generateCppParams extends ObjWithValues {
     isString: boolean
-    values: valuesType
 }
 
 export function generateCpp({ isString, values }: generateCppParams) {
     return `
-// generated using ${PROJECT_URL}
+// ${GENERATED_USING}
 
 ${isString ? "#include <string>" : ""}
 
