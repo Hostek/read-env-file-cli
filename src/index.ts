@@ -5,7 +5,7 @@ import inquirer from "inquirer"
 import path from "path"
 import { Cpp_data_choices } from "./constants.js"
 import { generateCpp } from "./generators/generateCpp.js"
-import { supported_langs, values } from "./types.js"
+import { supported_langs, valuesType } from "./types.js"
 
 const lang_choices: supported_langs[] = ["c++", "typescript"]
 
@@ -46,7 +46,7 @@ file = file.replaceAll("\r", "")
 
 const each_line = file.split("\n")
 
-const values: values = each_line.map((line) => {
+const values: valuesType = each_line.map((line) => {
     const [key, value] = line.split("=", 2)
     return { key, value }
 })
