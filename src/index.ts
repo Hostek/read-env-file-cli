@@ -3,9 +3,9 @@
 import fs from "fs"
 import inquirer from "inquirer"
 import path from "path"
-import { Cpp_data_choices, PROJECT_URL } from "./constants.js"
+import { Cpp_data_choices } from "./constants.js"
+import { generateCpp } from "./generators/generateCpp.js"
 import { supported_langs } from "./types"
-import { generateEscapedValue } from "./utils/generateEscapedValue.js"
 
 const lang_choices: supported_langs[] = ["c++", "typescript"]
 
@@ -93,18 +93,7 @@ if (type === "c++") {
 
     const isString = data_type === "std::string"
 
-    const data = `
-// generated using ${PROJECT_URL}
-
-${isString ? "#include <string>" : ""}
-
-namespace generated {\n
-${values.reduce((prev, curr) => {
-    return (prev += `\t${isString ? "std::string" : "char"} ${curr.key}${
-        !isString ? "[]" : ""
-    } = "${generateEscapedValue(curr.value)}";\n`)
-}, "")}
-}`
+    const data = generateCpp({ isString, values })
 
     fs.writeFileSync(path.join(root_path, filename), data)
 } else if (type === "typescript") {
