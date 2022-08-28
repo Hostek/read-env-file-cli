@@ -131,3 +131,6 @@ dist
 
 ./tester.txt
 tester.txt
+
+./tests
+tests
