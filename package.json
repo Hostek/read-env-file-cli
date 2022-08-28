@@ -1,0 +1,19 @@
+{
+    "name": "read-env-file",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "build:watch": "tsc -w",
+        "start": "node dist",
+        "watch": "npm run build:watch"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^18.7.13",
+        "typescript": "^4.8.2"
+    }
+}
