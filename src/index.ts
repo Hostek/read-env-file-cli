@@ -3,9 +3,11 @@
 import fs from "fs"
 import inquirer from "inquirer"
 import path from "path"
+import { Cpp_data_choices, PROJECT_URL } from "./constants.js"
 import { supported_langs } from "./types"
+import { generateEscapedValue } from "./utils/generateEscapedValue.js"
 
-const lang_choices: supported_langs[] = ["cpp", "typescript"]
+const lang_choices: supported_langs[] = ["c++", "typescript"]
 
 const answers = await inquirer.prompt([
     {
@@ -25,11 +27,18 @@ const answers = await inquirer.prompt([
         message: "Create .env.example file?",
         choices: ["yes", "no"],
     },
+    {
+        name: "name",
+        type: "list",
+        message: "Choose a name for generated file: ",
+        choices: ["default", "custom"],
+    },
 ])
 
 const env_dir: string = answers.env_dir
 const type: typeof lang_choices[number] = answers.type
 const create_example = answers.example === "yes"
+const chooseCustomName = answers.name === "custom"
 
 let file = fs.readFileSync(env_dir, { encoding: "utf-8" })
 
@@ -38,18 +47,67 @@ file = file.replaceAll("\r", "")
 const each_line = file.split("\n")
 
 const values = each_line.map((line) => {
-    const [key, value] = line.split("=", 1)
+    const [key, value] = line.split("=", 2)
     return { key, value }
 })
 
+const root_path = path.join(env_dir, "..")
+
 if (create_example) {
-    let data = values.reduce((prev, curr) => {
+    const data = values.reduce((prev, curr) => {
         return (prev += `${curr.key}=\n`)
     }, "")
 
-    fs.writeFileSync(path.join(env_dir, "..", "./.env.example"), data)
+    fs.writeFileSync(path.join(root_path, "./.env.example"), data)
 }
 
-if (type === "cpp") {
+let filename = ""
+
+if (chooseCustomName) {
+    const answer = await inquirer.prompt({
+        name: "name",
+        type: "input",
+        message: "Type custom file name: ",
+    })
+
+    filename = answer.name
+} else {
+    const date = Date.now()
+
+    filename = `generated-${date.toString()}`
+}
+
+if (type === "c++") {
+    if (!filename.includes(".")) {
+        filename += ".cpp"
+    }
+
+    const answer = await inquirer.prompt({
+        name: "data_type",
+        type: "list",
+        message: "I should use: ",
+        choices: Cpp_data_choices,
+    })
+
+    const data_type: typeof Cpp_data_choices[number] = answer.data_type
+
+    const isString = data_type === "std::string"
+
+    const data = `
+// generated using ${PROJECT_URL}
+
+${isString ? "#include <string>" : ""}
+
+namespace generated {\n
+${values.reduce((prev, curr) => {
+    return (prev += `\t${isString ? "std::string" : "char"} ${curr.key}${
+        !isString ? "[]" : ""
+    } = "${generateEscapedValue(curr.value)}";\n`)
+}, "")}
+}`
+
+    fs.writeFileSync(path.join(root_path, filename), data)
 } else if (type === "typescript") {
 }
+
+console.log(`File saved as: ${filename}`)
