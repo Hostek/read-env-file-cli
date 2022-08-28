@@ -20,9 +20,9 @@
         "url": "git+https://github.com/Hostek/read-env-file-cli"
     },
     "bugs": {
-        "url": "https://github.com/Hostek/Organizator/issues"
+        "url": "https://github.com/Hostek/read-env-file-cli/issues"
     },
-    "homepage": "https://github.com/Hostek/Organizator#readme",
+    "homepage": "https://github.com/Hostek/read-env-file-cli#readme",
     "license": "MIT",
     "devDependencies": {
         "@types/inquirer": "^9.0.1",
