@@ -42,6 +42,14 @@ const values = each_line.map((line) => {
     return { key, value }
 })
 
+if (create_example) {
+    let data = values.reduce((prev, curr) => {
+        return (prev += `${curr.key}=\n`)
+    }, "")
+
+    fs.writeFileSync(path.join(env_dir, "..", "./.env.example"), data)
+}
+
 if (type === "cpp") {
 } else if (type === "typescript") {
 }
