@@ -1,6 +1,12 @@
 # read-env-file-cli
 CLI that generates types for different languages based on .env file
 
+## Requirements
+
+```
+NodeJS >= 15.0.0
+```
+
 ## Install
 
 using npm: `npm i -g @hostek123/read-env-file`
@@ -36,7 +42,7 @@ namespace generated {
 }
 ```
 
-It would create also `.env.example` file:
+It would also create `.env.example` file:
 ```
 test=
 test1=
