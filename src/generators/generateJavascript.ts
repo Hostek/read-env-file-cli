@@ -24,7 +24,7 @@ export ${generatedObject}`
 ${generatedObject}
 
 module.exports = {
-    generated_env
+    generated_env: generated_env
 }`
     } else {
         return ""
