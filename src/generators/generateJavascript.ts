@@ -10,7 +10,9 @@ export function generateJavascript({
     values,
     module,
 }: generateJavascriptParam) {
-    const generatedObject = `const generated_env = ${generateJSON({ values })}`
+    const generatedObject = `${
+        module === "commonJS" ? "var" : "const"
+    } generated_env = ${generateJSON({ values })}`
 
     if (module === "ES6 modules") {
         return `
