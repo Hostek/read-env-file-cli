@@ -1,4 +1,9 @@
-export type supported_langs = "c++" | "typescript" | "javascript"
+export type supported_langs =
+    | "c++"
+    | "typescript"
+    | "javascript"
+    | "JSON"
+    | "python"
 
 export type Cpp_data_types = "char[]" | "std::string"
 
