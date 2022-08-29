@@ -13,4 +13,5 @@ export const lang_choices: supported_langs[] = [
     "typescript",
     "javascript",
     "JSON",
+    "python",
 ]

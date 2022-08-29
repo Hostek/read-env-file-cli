@@ -11,6 +11,7 @@ import {
 import { generateCpp } from "./generators/generateCpp.js"
 import { generateJavascript } from "./generators/generateJavascript.js"
 import { generateJSON } from "./generators/generateJSON.js"
+import { generatePython } from "./generators/generatePython.js"
 import { generateTypescript } from "./generators/generateTypescript.js"
 import { valuesType } from "./types.js"
 
@@ -140,6 +141,12 @@ if (type === "c++") {
     }
 
     data = generateJSON({ values })
+} else if (type === "python") {
+    if (!filename.includes(".")) {
+        filename += ".py"
+    }
+
+    data = generatePython({ values })
 }
 
 fs.writeFileSync(path.join(root_path, filename), data)
