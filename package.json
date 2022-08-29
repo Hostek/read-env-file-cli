@@ -1,6 +1,6 @@
 {
     "name": "@hostek123/read-env-file",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "CLI that generates types for different languages based on .env file",
     "main": "dist/index.js",
     "type": "module",

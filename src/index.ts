@@ -3,13 +3,16 @@
 import fs from "fs"
 import inquirer from "inquirer"
 import path from "path"
-import { Cpp_data_choices, JS_module_choices } from "./constants.js"
+import {
+    Cpp_data_choices,
+    JS_module_choices,
+    lang_choices,
+} from "./constants.js"
 import { generateCpp } from "./generators/generateCpp.js"
 import { generateJavascript } from "./generators/generateJavascript.js"
+import { generateJSON } from "./generators/generateJSON.js"
 import { generateTypescript } from "./generators/generateTypescript.js"
-import { supported_langs, valuesType } from "./types.js"
-
-const lang_choices: supported_langs[] = ["c++", "typescript", "javascript"]
+import { valuesType } from "./types.js"
 
 const answers = await inquirer.prompt([
     {
@@ -131,6 +134,12 @@ if (type === "c++") {
     const answerik: typeof JS_module_choices[number] = answer.answerik
 
     data = generateJavascript({ values, module: answerik })
+} else if (type === "JSON") {
+    if (!filename.includes(".")) {
+        filename += ".json"
+    }
+
+    data = generateJSON({ values })
 }
 
 fs.writeFileSync(path.join(root_path, filename), data)
