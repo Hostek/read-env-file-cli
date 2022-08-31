@@ -57,3 +57,4 @@ test1=
 -   Javascript (commonJS and ES6 modules)
 -   Typescript
 -   JSON
+-   Python
